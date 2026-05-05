@@ -140,3 +140,10 @@ a.secondary {
     --button-secondary-border: #1a1a1a;
   }
 }
+
+
+.btn-cust{
+  width: 100px;
+  font-size: 16px;
+  background-color: var(--foreground);
+}
