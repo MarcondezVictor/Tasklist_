@@ -3,6 +3,14 @@
 import styles from "./page.module.css";
 import {useState} from "react";
 
+/*
+    TODO
+    Mensagem Olá só é alterada quando se clica num botão
+    Função do botão é ir buscar o que está no input e colocar na mensagem Olá
+
+    É NECESSÁRIO CRIAR UMA SEGUNDA VARIÁVEL DE ESTADO
+ */
+
 export default function Home() {
     // variável de estado
     const [name, setName] = useState("mundo!");
@@ -25,6 +33,9 @@ export default function Home() {
           <button style={{width: '100px', fontSize: '16px'}} onClick={alterName}>
               Clica em mim antes :D
           </button>
+
+          <input value={name}
+                 onChange={(e) => setName(e.target.value)} />
       </main>
     </div>
   );
