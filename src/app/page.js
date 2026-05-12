@@ -14,28 +14,29 @@ import {useState} from "react";
 export default function Home() {
     // variável de estado
     const [name, setName] = useState("mundo!");
+    const [input, setInput] = useState("");
 
     // função
-    const alterName =
-        () => { setName("mundo!")}
+    const atualizaMensagemOla =
+        () => { setName(input)}
 
     return (
     <div className={styles.page}>
       <main className={styles.main}>
         <h2>Olá {name}</h2>
 
-          <button style={{width: '100px', fontSize: '16px'}} onClick={
+          <button className={styles.btnCust} onClick={
               () => {setName("MUNDO!!!!")}
           }>
               Clica em mim ;)
           </button>
 
-          <button style={{width: '100px', fontSize: '16px'}} onClick={alterName}>
-              Clica em mim antes :D
+          <button className={styles.btnCust} onClick={atualizaMensagemOla}>
+              Atualiza mensagem Olá
           </button>
 
-          <input value={name}
-                 onChange={(e) => setName(e.target.value)} />
+          <input value={input}
+                 onChange={(evt) => setInput(evt.target.value)} />
       </main>
     </div>
   );
