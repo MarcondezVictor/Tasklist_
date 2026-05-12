@@ -25,7 +25,7 @@ export default function Lista() {
 
     return <div>
         <main>
-            <h2 style={{color: 'black'}}>Victor Lopes 28512</h2>
+            <h2 style={{color: 'black'}}>Lista de Tarefas</h2>
             <div className={styles.displayFlex}>
                 <label>Escreve no input a tarefa que queres realizar</label>
                 <div className={styles.divInputBtn}>
