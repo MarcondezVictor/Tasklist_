@@ -53,7 +53,10 @@ export default function Lista() {
 
     const handleEditTask = (idTask, taskValue) => {
         var copiaLista = [...lista];
-        copiaLista[idTask] = taskValue;
+        copiaLista[idTask] = {
+            ...copiaLista[idTask],        // mantém o objeto original (id, etc.)
+            DescricaoTarefa: taskValue     // só troca o texto
+        };
         setLista(copiaLista);
     }
 

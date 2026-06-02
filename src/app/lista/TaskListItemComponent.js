@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 export default function TaskListItemComponent({ indice, valor, handleDeleteTask, handleEditTask }) {
     return (
         <div className={styles.itemLista}>
-            <p className={styles.itemTexto}>{valor.DescricaoTarefa}</p>
+            <p className={styles.itemTexto}>{valor.DescricaoTarefa + valor.Concluida}</p>
             <div className={styles.itemBotoes}>
                 <button onClick={() => {
                     var res = prompt("Insira o valor para atualizar");
