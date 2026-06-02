@@ -1,31 +1,59 @@
-.mainPage{
-  margin-left: 10vw;
-  margin-right: 10vw;
-  height: 90vh;
-  padding: 10px;
-  background-color: lightgray;
-}
-
-ul {
-  list-style-type: none;
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background-color: #333333;
 }
 
-ul li {
-  float: left;
+:root {
+  --bg: #080810;
+  --surface: #0f0f1a;
+  --card: #16162a;
+  --border: #252545;
+  --accent: #818cf8;
+  --accent-hover: #6366f1;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --danger: #f87171;
+  --radius: 12px;
 }
 
-ul li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-geist-sans), 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+body > ul {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 24px;
+  background: rgba(8, 8, 16, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  list-style: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+body > ul li a {
+  display: inline-block;
+  padding: 7px 16px;
+  color: var(--text-muted);
   text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s;
 }
 
-ul li a:hover {
-  background-color: #111111;
+body > ul li a:hover {
+  color: var(--text);
+  background: var(--card);
+}
+
+.mainPage {
+  min-height: calc(100vh - 57px);
 }

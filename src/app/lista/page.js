@@ -3,134 +3,84 @@
 import styles from "./page.module.css";
 import {useEffect, useState} from "react";
 import AddToTaskListComponent from "@/app/lista/AddToTaskListComponent";
+import TaskListItemComponent from "@/app/lista/TaskListItemComponent";
 import {createTarefa, fetchLista} from "@/api/api";
 
 export default function Lista() {
-    /*
-        Variáveis de estado
-     */
+
     const [inputTexto, setInputTexto] = useState("");
     const [lista, setLista] = useState([]);
 
     const getTarefasFromServidor = async () => {
         let dadosDoServidor = await fetchLista();
-        let tarefasDoServidor = dadosDoServidor.data.map((elem, index)=>{
-            return elem.DescricaoTarefa;
-        });
-
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setLista(tarefasDoServidor);
+        setLista(dadosDoServidor.data);   // <-- Tarefa 2, ponto 1.1
     }
 
-    /*
-        Use Effect
-     */
-    useEffect(async () => {
-        try {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            await getTarefasFromServidor();
-        }catch (err){
-            alert("Erro a buscar lista de tarefas do servidor")
-            console.log(err);
+    useEffect(() => {
+        async function carregarDados() {
+            try {
+                await getTarefasFromServidor();
+            } catch (err) {
+                alert("Erro a buscar lista de tarefas do servidor");
+                console.log(err);
+            }
         }
-
+        carregarDados();
     }, []);
 
-
-
-    /*
-        Função para adicionar texto do input(ligado a uma variável de estado)
-            à lista de tarefas(varíavel de estado)
-     */
     const handleButtonClick = async () => {
-        if (inputTexto != null && inputTexto != "") {
-            /*
-            // copio a variavel de estado
-            var copiaLista = [...lista];
-            // atualizo a copia da lista
-            copiaLista.push(inputTexto);
-            // por fim atualizo a lista
-            setLista(copiaLista);
-
-            // limpa o input onde o utilizador escreve
-            setInputTexto("");
-            */
+        if (inputTexto != null && inputTexto !== "") {
             try {
                 let resposta = await createTarefa(inputTexto);
-                if(resposta){
+                if (resposta) {
                     alert("A tarefa foi inserida com sucesso");
-
                     await getTarefasFromServidor();
-                }else{
+                } else {
                     alert("A tarefa não foi inserida");
                 }
-            }catch (err){
-                alert("Erro a inserir tarefa no servidor")
+            } catch (err) {
+                alert("Erro a inserir tarefa no servidor");
                 console.log(err);
             }
         }
     }
 
-    /*
-        Função para apagar tarefa da lista dado o ID
-     */
     const handleDeleteTask = (idTask) => {
-        // copio a variavel de estado
         var copiaLista = [...lista];
-
-        // remove da lista o indice
         copiaLista.splice(idTask, 1);
-
-        // por fim atualizo a lista
         setLista(copiaLista);
     }
 
-    /*
-        Função para editar a tarefa,
-        dado o ID e o VALOR
-     */
     const handleEditTask = (idTask, taskValue) => {
-        // copio a variavel de estado
         var copiaLista = [...lista];
-
-        // atualizar o valor
         copiaLista[idTask] = taskValue;
-
-        // por fim sempre atualizar a variavel do estado
         setLista(copiaLista);
     }
 
-
-    return <div>
-        <main>
-            <h2 style={{color: 'lightcyan'}}>Lista de tarefas</h2>
-            <div className={styles.displayFlex}>
-                <label>Escreve no input a tarefa que queres realizar</label>
-
-                <AddToTaskListComponent inputTextoParam={inputTexto} setInputTextoParam={setInputTexto}
-                                        handleButtonClickParam={handleButtonClick}></AddToTaskListComponent>
-
-                {lista.map((valor, indice) => {
-
-                    return <div className={styles.itemLista} key={indice + valor}>
-                        <p>{indice}: {valor}</p>
-                        <div>
-                            <button onClick={() => {
-                                var res = prompt("Insira o valor para atualizar");
-                                if (res != null && res != "") {
-                                    handleEditTask(indice, res);
-                                }
-                            }}>✍️
-                            </button>
-                            <button onClick={() => {
-                                handleDeleteTask(indice);
-                            }}>❌
-                            </button>
-                        </div>
-
-                    </div>;
-                })}
-            </div>
-        </main>
-    </div>;
-}
+    return (
+        <div>
+            <main className={styles.main}>
+                <h2 className={styles.titulo}>Lista de tarefas</h2>
+                <p className={styles.subtitulo}>Escreve no input a tarefa que queres realizar</p>
+                <div className={styles.card}>
+                    <AddToTaskListComponent
+                        inputTextoParam={inputTexto}
+                        setInputTextoParam={setInputTexto}
+                        handleButtonClickParam={handleButtonClick}
+                    />
+                </div>
+                <br/>
+                <div className={styles.displayFlex}>
+                    {lista.map((valor, indice) => {
+                        return <TaskListItemComponent
+                            key={indice}
+                            indice={indice}
+                            valor={valor}
+                            handleDeleteTask={handleDeleteTask}
+                            handleEditTask={handleEditTask}
+                        />;
+                    })}
+                </div>
+            </main>
+        </div>
+    )};

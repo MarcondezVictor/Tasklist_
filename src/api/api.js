@@ -2,7 +2,7 @@
 
 
 export async function fetchLista(){
-     let headerResponse = await fetch("http://localhost:1337/api/tarefas", {
+     let headerResponse = await fetch("https://reliable-connection-283dd6b7dd.strapiapp.com/api/tarefas", {
         headers: {
             Accept: "application/json"
         }
@@ -16,7 +16,7 @@ export async function fetchLista(){
 }
 
 export async function createTarefa(textoTarefa){
-    let headerResponse = await fetch('http://localhost:1337/api/tarefas', {
+    let headerResponse = await fetch("https://reliable-connection-283dd6b7dd.strapiapp.com/api/tarefas", {
         method: 'POST',
         headers: {
             'accept': 'application/json',
